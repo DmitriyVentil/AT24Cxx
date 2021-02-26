@@ -1,0 +1,4 @@
+AT24C01.c:26:6:AT24C01_Write	48	static
+AT24C01.c:58:6:AT24C01_Read	48	static
+AT24C01.c:92:9:AT24C01_Search_Last	48	static
+AT24C01.c:141:6:AT24C01_Erase	48	static

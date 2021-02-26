@@ -1,0 +1,5 @@
+AT24C08.c:20:9:AT24C08_Block_Count	16	static
+AT24C08.c:34:6:AT24C08_Write	56	static
+AT24C08.c:69:6:AT24C08_Read	56	static
+AT24C08.c:106:10:AT24C08_Search_Last	56	static
+AT24C08.c:158:6:AT24C08_Erase	64	static

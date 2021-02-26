@@ -1,0 +1,4 @@
+AT24C32.c:24:6:AT24C32_Write	56	static
+AT24C32.c:56:6:AT24C32_Read	56	static
+AT24C32.c:90:10:AT24C32_Search_Last	72	static
+AT24C32.c:143:6:AT24C32_Erase	80	static
