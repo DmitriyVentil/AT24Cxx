@@ -114,10 +114,10 @@ uint8_t AT24C01_Search_Last(uint8_t Dev_Adr, uint8_t Mem_Adr_Start, uint8_t Mem_
 	{
 		while(HAL_I2C_Mem_Read(AT24C01_I2C, Dev_Adr, Mem_Adr_Start, 1, data, 8, 100)){};
 		for(last_Adr_count=0;last_Adr_count<8;last_Adr_count++)
-			{
-				if(data[last_Adr_count]==0xFF)
-				   return (Mem_Adr_Start+last_Adr_count);
-			}
+		{
+			if(data[last_Adr_count]==0xFF)
+			   return (Mem_Adr_Start+last_Adr_count);
+		}
 		Mem_Adr_Start=Mem_Adr_Start+8;
 	}
 	if(Data_Size%8!=0)

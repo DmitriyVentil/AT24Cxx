@@ -54,8 +54,8 @@ all: main-build
 main-build: stm32-AT24Cxx.elf secondary-outputs
 
 # Tool invocations
-stm32-AT24Cxx.elf: $(OBJS) $(USER_OBJS) /home/dmitriy/STM32CubeIDE/workspace_1.5.1/stm32-AT24Cxx/STM32L476RGTX_FLASH.ld
-	arm-none-eabi-gcc -o "stm32-AT24Cxx.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/dmitriy/STM32CubeIDE/workspace_1.5.1/stm32-AT24Cxx/STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32-AT24Cxx.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+stm32-AT24Cxx.elf: $(OBJS) $(USER_OBJS) /home/dmitriy/Рабочий\ стол/AT24Cxx/stm32-AT24Cxx/STM32L476RGTX_FLASH.ld
+	arm-none-eabi-gcc -o "stm32-AT24Cxx.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/dmitriy/Рабочий стол/AT24Cxx/stm32-AT24Cxx/STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32-AT24Cxx.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

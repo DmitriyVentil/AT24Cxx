@@ -122,10 +122,10 @@ uint16_t AT24C04_Search_Last(uint8_t Dev_Adr, uint16_t Mem_Adr_Start, uint16_t M
 		if(Mem_Adr_Start>0xFF){Dev_Adr=Dev_Adr | 0x02;}
 		while(HAL_I2C_Mem_Read(AT24C04_I2C, Dev_Adr, Mem_Adr_Start, 1, data, 16, 100)){};
 		for(last_Adr_count=0;last_Adr_count<16;last_Adr_count++)
-			{
-				if(data[last_Adr_count]==0xFF)
-				   return (Mem_Adr_Start+last_Adr_count);
-			}
+		{
+			if(data[last_Adr_count]==0xFF)
+			   return (Mem_Adr_Start+last_Adr_count);
+		}
 		Mem_Adr_Start=Mem_Adr_Start+16;
 	}
 	if(Data_Size%16!=0)

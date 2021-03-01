@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-#include "AT24C16.h"
+#include "AT24C128.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +37,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define NumofByte 16384
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -123,85 +123,53 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  uint8_t dataWrite[2048];
-  uint8_t dataRead[2048];
+  uint8_t dataWrite[NumofByte];
+  uint8_t dataRead[NumofByte];
 
 
-  for(uint16_t i=0;i<256;i++)
+  for(uint32_t i=0;i<NumofByte/256;i++)
+	  for(uint16_t j=i*256,k=0;j<256*(i+1);j++,k++)
+		  dataWrite[j]=k;
+
+  for(uint32_t i=255,j=0;i<NumofByte;i+=256,j++)
   {
-
-	  dataWrite[i]=i;
-  }
-  for(uint16_t i=256;i<512;i++)
-  {
-
-	  dataWrite[i]=i-256;
-  }
-  for(uint16_t i=512;i<768;i++)
-  {
-
-	  dataWrite[i]=i-512;
-  }
-  for(uint16_t i=768;i<1024;i++)
-  {
-
-	  dataWrite[i]=i-768;
-  }
-  for(uint16_t i=1024;i<1280;i++)
-  {
-
-	  dataWrite[i]=i-1024;
-  }
-  for(uint16_t i=1280;i<1536;i++)
-  {
-
-	  dataWrite[i]=i-1280;
-  }
-  for(uint16_t i=1536;i<1792;i++)
-  {
-
-	  dataWrite[i]=i-1536;
-  }
-  for(uint16_t i=1792;i<2048;i++)
-  {
-
-	  dataWrite[i]=i-1792;
-  }
-  dataWrite[255]=20;
-  dataWrite[511]=30;
-  dataWrite[767]=40;
-  dataWrite[1023]=50;
-  dataWrite[1279]=60;
-  dataWrite[1535]=70;
-  dataWrite[1791]=80;
-  dataWrite[2047]=90;
-  AT24C16_Erase(Adr_AT24C16,0,2047);
-  AT24C16_Write(Adr_AT24C16,0,dataWrite,2048);
-  AT24C16_Read(Adr_AT24C16,0,dataRead,2048);
-  uint16_t ADR=AT24C16_Search_Last(Adr_AT24C16,5,2047);
-  printf("Last adr=%d\n",ADR);
-  printf("START1\n");
-  for(uint16_t i=0;i<2048;i++)
-  {
-	  printf("mass[%d]=%d\n",i,dataRead[i]);
-  }
-  printf("END1\n");
-  printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
-  AT24C16_Erase(Adr_AT24C16,0,2047);
-  AT24C16_Write(Adr_AT24C16,5,dataWrite,17);
-  AT24C16_Read(Adr_AT24C16,0,dataRead,2048);
-
-  ADR=AT24C16_Search_Last(Adr_AT24C16,5,2047);
-  printf("Last adr=%d\n",ADR);
-  printf("START2\n");
-  for(uint16_t i=0;i<2048;i++)
-  {
-	  printf("mass[%d]=%d\n",i,dataRead[i]);
+	  dataWrite[i]=j;
   }
 
+  if(HAL_I2C_IsDeviceReady(AT24C128_I2C,Adr_AT24C128,12,10)==HAL_OK)
+  {
+	  AT24C128_Erase(Adr_AT24C128,0,NumofByte-1);
+	  AT24C128_Write(Adr_AT24C128,0,dataWrite,NumofByte);
+	  AT24C128_Read(Adr_AT24C128,0,dataRead,NumofByte);
+	  uint16_t ADR=AT24C128_Search_Last(Adr_AT24C128,5,NumofByte-1);
+	  printf("Last adr=%d\n",ADR);
+	  printf("START1\n");
+	  for(uint32_t i=0;i<NumofByte;i++)
+	  {
+		  printf("mass[%d]=%d\n",i,dataRead[i]);
+	  }
+	  printf("END1\n");
+	  printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
-  printf("END2\n");
+	  AT24C128_Erase(Adr_AT24C128,0,NumofByte-1);
+	  AT24C128_Write(Adr_AT24C128,5,dataWrite,25);
+	  AT24C128_Read(Adr_AT24C128,0,dataRead,NumofByte);
+
+	  ADR=AT24C128_Search_Last(Adr_AT24C128,5,NumofByte-1);
+	  printf("Last adr=%d\n",ADR);
+	  printf("START2\n");
+	  for(uint16_t i=0;i<NumofByte;i++)
+	  {
+		  printf("mass[%d]=%d\n",i,dataRead[i]);
+	  }
+
+
+	  printf("END2\n");
+  } else
+  {
+	  printf("ERROR\n");
+  }
+
   HAL_Delay(100);
   /* USER CODE END 2 */
 
