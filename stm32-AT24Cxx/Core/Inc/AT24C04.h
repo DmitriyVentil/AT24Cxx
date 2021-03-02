@@ -14,10 +14,8 @@ github: DmitriyVentil
 extern I2C_HandleTypeDef hi2c1;
 #define AT24C04_I2C  &hi2c1
 // Адрес микросхемы памяти
-#define Adr_AT24C04_0   0xA0  // A1=0,A2=0
-#define Adr_AT24C04_1   0xA4  // A1=1,A2=0
-#define Adr_AT24C04_2   0xA8  // A1=0,A2=1
-#define Adr_AT24C04_3   0xAC  // A1=1,A2=1
+#define Adr_AT24C04   0xA0
+
 /*
  Функция записи в EEPROM AT24C04
  Dev_Adr - адрес AT24C04

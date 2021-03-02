@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-#include "AT24C128.h"
+#include "AT24C16.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +37,8 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define NumofByte 16384
+//#define NumofByte 131072
+#define NumofByte 2048
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -123,48 +124,58 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  uint8_t dataWrite[NumofByte];
-  uint8_t dataRead[NumofByte];
+  uint8_t dataWR[NumofByte];
+
 
 
   for(uint32_t i=0;i<NumofByte/256;i++)
-	  for(uint16_t j=i*256,k=0;j<256*(i+1);j++,k++)
-		  dataWrite[j]=k;
+	  for(uint32_t j=i*256,k=0;j<256*(i+1);j++,k++)
+		  dataWR[j]=k;
 
-  for(uint32_t i=255,j=0;i<NumofByte;i+=256,j++)
+  uint8_t m=0;
+  for(uint32_t i=255;i<NumofByte;i+=256,m++)
   {
-	  dataWrite[i]=j;
+	  dataWR[i]=m;
   }
 
-  if(HAL_I2C_IsDeviceReady(AT24C128_I2C,Adr_AT24C128,12,10)==HAL_OK)
+  if(HAL_I2C_IsDeviceReady(AT24C16_I2C,Adr_AT24C16,12,10)==HAL_OK)
   {
-	  AT24C128_Erase(Adr_AT24C128,0,NumofByte-1);
-	  AT24C128_Write(Adr_AT24C128,0,dataWrite,NumofByte);
-	  AT24C128_Read(Adr_AT24C128,0,dataRead,NumofByte);
-	  uint16_t ADR=AT24C128_Search_Last(Adr_AT24C128,5,NumofByte-1);
+	  AT24C16_Erase(Adr_AT24C16,0,NumofByte-1);
+	  AT24C16_Write(Adr_AT24C16,0,dataWR,NumofByte);
+	  for(uint32_t i=0;i<NumofByte;i++)
+	  {
+		  dataWR[i]=0;
+	  }
+	  AT24C16_Read(Adr_AT24C16,0,dataWR,NumofByte);
+	  uint32_t ADR=AT24C16_Search_Last(Adr_AT24C16,0,NumofByte-1);
 	  printf("Last adr=%d\n",ADR);
 	  printf("START1\n");
 	  for(uint32_t i=0;i<NumofByte;i++)
 	  {
-		  printf("mass[%d]=%d\n",i,dataRead[i]);
+		  printf("mass[%d]=%d\n",i,dataWR[i]);
 	  }
+
 	  printf("END1\n");
 	  printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
-	  AT24C128_Erase(Adr_AT24C128,0,NumofByte-1);
-	  AT24C128_Write(Adr_AT24C128,5,dataWrite,25);
-	  AT24C128_Read(Adr_AT24C128,0,dataRead,NumofByte);
+	  AT24C16_Erase(Adr_AT24C16,0,NumofByte-1);
+	  AT24C16_Write(Adr_AT24C16,5,dataWR,25);
+	  for(uint32_t i=0;i<NumofByte;i++)
+	  {
+		  dataWR[i]=0;
+	  }
+	  AT24C16_Read(Adr_AT24C16,0,dataWR,NumofByte);
 
-	  ADR=AT24C128_Search_Last(Adr_AT24C128,5,NumofByte-1);
+	  ADR=AT24C16_Search_Last(Adr_AT24C16,5,NumofByte-1);
 	  printf("Last adr=%d\n",ADR);
 	  printf("START2\n");
-	  for(uint16_t i=0;i<NumofByte;i++)
+	  for(uint32_t i=0;i<NumofByte;i++)
 	  {
-		  printf("mass[%d]=%d\n",i,dataRead[i]);
+		  printf("mass[%d]=%d\n",i,dataWR[i]);
 	  }
 
-
 	  printf("END2\n");
+
   } else
   {
 	  printf("ERROR\n");

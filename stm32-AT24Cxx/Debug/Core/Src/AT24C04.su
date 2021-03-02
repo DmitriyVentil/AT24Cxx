@@ -1,4 +1,4 @@
 AT24C04.c:26:6:AT24C04_Write	56	static
-AT24C04.c:61:6:AT24C04_Read	56	static
-AT24C04.c:98:10:AT24C04_Search_Last	56	static
-AT24C04.c:150:6:AT24C04_Erase	64	static
+AT24C04.c:62:6:AT24C04_Read	56	static
+AT24C04.c:99:10:AT24C04_Search_Last	56	static
+AT24C04.c:152:6:AT24C04_Erase	64	static
