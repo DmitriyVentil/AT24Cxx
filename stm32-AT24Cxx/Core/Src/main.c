@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-#include "AT24C16.h"
+#include "AT24Cxx.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,8 +37,9 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-//#define NumofByte 131072
-#define NumofByte 2048
+
+#define NumofByte 32768
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -138,50 +139,30 @@ int main(void)
 	  dataWR[i]=m;
   }
 
-  if(HAL_I2C_IsDeviceReady(AT24C16_I2C,Adr_AT24C16,12,10)==HAL_OK)
+  if(HAL_I2C_IsDeviceReady(AT24Cxx_I2C,Adr_AT24Cxx,1,10)==HAL_OK)
   {
-	  AT24C16_Erase(Adr_AT24C16,0,NumofByte-1);
-	  AT24C16_Write(Adr_AT24C16,0,dataWR,NumofByte);
+	  AT24Cxx_Erase(AT24C256,Adr_AT24Cxx,0,NumofByte-1);
+	  AT24Cxx_Write(AT24C256,Adr_AT24Cxx,0,dataWR,NumofByte);
+
 	  for(uint32_t i=0;i<NumofByte;i++)
 	  {
 		  dataWR[i]=0;
 	  }
-	  AT24C16_Read(Adr_AT24C16,0,dataWR,NumofByte);
-	  uint32_t ADR=AT24C16_Search_Last(Adr_AT24C16,0,NumofByte-1);
-	  printf("Last adr=%d\n",ADR);
-	  printf("START1\n");
+	  AT24Cxx_Read(AT24C256,Adr_AT24Cxx,0,dataWR,NumofByte);
+
+	  printf("START\n");
 	  for(uint32_t i=0;i<NumofByte;i++)
 	  {
-		  printf("mass[%d]=%d\n",i,dataWR[i]);
+		  printf("mass[%d]=%d\n",(int)i,dataWR[i]);
 	  }
 
-	  printf("END1\n");
-	  printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
-	  AT24C16_Erase(Adr_AT24C16,0,NumofByte-1);
-	  AT24C16_Write(Adr_AT24C16,5,dataWR,25);
-	  for(uint32_t i=0;i<NumofByte;i++)
-	  {
-		  dataWR[i]=0;
-	  }
-	  AT24C16_Read(Adr_AT24C16,0,dataWR,NumofByte);
-
-	  ADR=AT24C16_Search_Last(Adr_AT24C16,5,NumofByte-1);
-	  printf("Last adr=%d\n",ADR);
-	  printf("START2\n");
-	  for(uint32_t i=0;i<NumofByte;i++)
-	  {
-		  printf("mass[%d]=%d\n",i,dataWR[i]);
-	  }
-
-	  printf("END2\n");
+	  printf("END\n");
 
   } else
   {
 	  printf("ERROR\n");
   }
 
-  HAL_Delay(100);
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -1,0 +1,3 @@
+AT24Cxx.c:24:6:AT24Cxx_Write	64	static
+AT24Cxx.c:83:6:AT24Cxx_Read	64	static
+AT24Cxx.c:127:6:AT24Cxx_Erase	80	dynamic

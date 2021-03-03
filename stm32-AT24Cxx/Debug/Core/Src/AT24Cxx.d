@@ -1,4 +1,4 @@
-Core/Src/AT24CM02.o: ../Core/Src/AT24CM02.c ../Core/Inc/AT24CM02.h \
+Core/Src/AT24Cxx.o: ../Core/Src/AT24Cxx.c ../Core/Inc/AT24Cxx.h \
  ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -28,7 +28,7 @@ Core/Src/AT24CM02.o: ../Core/Src/AT24CM02.c ../Core/Inc/AT24CM02.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
 
-../Core/Inc/AT24CM02.h:
+../Core/Inc/AT24Cxx.h:
 
 ../Core/Inc/main.h:
 
